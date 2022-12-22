@@ -13,3 +13,8 @@ type RegisterUserInput struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 }
+
+type LoginInput struct{
+	Email string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required"`
+}

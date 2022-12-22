@@ -6,6 +6,8 @@ import "gorm.io/gorm"
 type Repository interface{
 	// buat fungsi save yang parameternya struct User, balikannya User dan error
 	Save(user User)(User, error)
+
+	FindByEmail(email string)(User, error)
 }
 
 // buat struct Repository, pada struct respository r nya kecil berarti struct tersebut berdifat private atau tidak bisa di akses di package lain
@@ -29,4 +31,16 @@ func (r *repository) Save(user User) (User, error){
 		}
 
 		return user, nil
+}
+
+func (r *repository) FindByEmail(email string)(User, error){
+	var user User
+
+	err := r.db.Where("email = ?", email).Find(&user).Error
+
+	if err != nil{
+		return user, err
+	}
+
+	return user, nil
 }
